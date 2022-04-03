@@ -1,4 +1,5 @@
 import * as sst from "@serverless-stack/resources";
+import { HttpMethod } from "@aws-cdk/aws-apigatewayv2-alpha";
 
 export default class ApiStack extends sst.Stack {
 	//Public reference to the API
@@ -17,6 +18,9 @@ export default class ApiStack extends sst.Stack {
 					TABLE_NAME: table.tableName,
 					STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 				},
+			},
+			cors: {
+				allowMethods: [HttpMethod.GET],
 			},
 		    routes: {
 				"GET /": "src/lambda.handler",
